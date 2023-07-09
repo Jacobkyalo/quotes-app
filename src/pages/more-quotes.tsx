@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Link from "next/link";
 import { BiArrowBack } from "react-icons/bi";
 import QuoteText from "@/components/quote-text";

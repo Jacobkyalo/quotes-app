@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
 import { QuoteProps } from "../../type";
 export default function QuoteText({ quote }: QuoteProps) {

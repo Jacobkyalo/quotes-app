@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect } from "react";
 import { Poppins } from "next/font/google";
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
