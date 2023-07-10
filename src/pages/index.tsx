@@ -1,9 +1,10 @@
-// @ts-nocheck
+// @ts-nochec
 import React, { useState, useEffect } from "react";
 import { Poppins } from "next/font/google";
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import Loading from "@/components/loading";
 import { getRandomQouteId } from "@/utils/helpers";
 import { QuoteProps } from "../../type";
 
@@ -14,15 +15,22 @@ const poppins = Poppins({
 });
 
 export default function Home() {
-  const [quote, setQuote] = useState({});
+  const [quote, setQuote] = useState<QuoteProps>({
+    id: 0,
+    quote: "",
+    author: "",
+  });
+  const [loading, setLoading] = useState<Boolean>(false);
 
   const getQuote = async () => {
     try {
+      setLoading(true);
       const res = await fetch(
         `https://dummyjson.com/quotes/${getRandomQouteId()}`
       );
       const quote = await res.json();
       setQuote(quote);
+      setLoading(false);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -32,7 +40,7 @@ export default function Home() {
     getQuote();
 
     return () => {
-      setQuote({});
+      setQuote({ id: 0, quote: "", author: "" });
     };
   }, []);
 
@@ -43,16 +51,30 @@ export default function Home() {
         <section className="py-24 sm:py-32 flex items-center justify-center">
           <div className="w-full sm:w-4/5 text-black">
             <p className="font-medium text-sm sm:text-lg">
-              <span>
-                <RiDoubleQuotesL size={30} />
-              </span>
-              {quote.quote}
-              <span>
-                <RiDoubleQuotesR size={30} className="inline ml-2" />
-              </span>
+              {loading ? (
+                <Loading>
+                  <span>Loading quote...</span>
+                </Loading>
+              ) : (
+                <>
+                  <span>
+                    <RiDoubleQuotesL size={30} />
+                  </span>
+                  {quote.quote}
+                  <span>
+                    <RiDoubleQuotesR size={30} className="inline ml-2" />
+                  </span>
+                </>
+              )}
             </p>
             <span className="block text-end mt-8 me-10 italic">
-              ~ {quote.author}
+              {loading ? (
+                <Loading>
+                  <span>Loading author...</span>
+                </Loading>
+              ) : (
+                <> ~ {quote.author}</>
+              )}
             </span>
             <div className="text-center">
               <button
