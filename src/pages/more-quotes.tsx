@@ -21,7 +21,7 @@ export default function MoreQuotes({
         </nav>
       </header>
       <section className="py-16 sm:py-24 flex flex-col items-center justify-center">
-        {quotes?.quotes.map((quote, index) => (
+        {quotes?.quotes.map((quote: QuoteProps, index: number) => (
           <QuoteText key={index} quote={quote} />
         ))}
       </section>
